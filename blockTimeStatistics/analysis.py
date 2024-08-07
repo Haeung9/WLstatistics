@@ -199,5 +199,5 @@ def main(difficultyFileName):
 if __name__ == "__main__":
     # difficultyFileName = os.path.join(os.path.join("temp","WL"), "difficultyResult_processed.csv")
     # difficultyFileName = os.path.join(os.path.join("temp","WL"), "testnetDifficultyResult_processed.csv")
-    difficultyFileName = "testnetDifficultyResult_processed.csv"
+    difficultyFileName = "difficultyResult_processed.csv"
     main(difficultyFileName)

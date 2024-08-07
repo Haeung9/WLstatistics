@@ -1,4 +1,4 @@
-from blockTimeStatistics import analysis, fetch, genBlockTime, utils
+from blockTimeStatistics import minerAnalysis, fetch, genBlockTime, utils
 
 if __name__=="__main__":
     endpoint = "http://127.0.0.1:8545"
@@ -13,11 +13,11 @@ if __name__=="__main__":
     # blk 2194400 # at Annapurna Testnet
     # blk 2520000 # at Annapurna Mainnet
 
-    # blockTo = fetch.fetchLatestBlockNumber(endpoint) + 1 
-    # blockFrom = 2540000 # after 20000 blocks from Annapurna Mainnet
+    blockTo = 2830000 # fetch.fetchLatestBlockNumber(endpoint) 
+    blockFrom = 2530000
 
-    blockFrom = 2580000
-    blockTo = 2600000 # fetch.fetchLatestBlockNumber(endpoint) 
+    # blockTo = 2520000 
+    # blockFrom = 2220000 # before 300,000 blocks from Annapurna Mainnet
 
     ## milstones ETH
     # blk 6988614 # at 1546300800 (2019-01-01 00:00:00 +0)
@@ -32,12 +32,12 @@ if __name__=="__main__":
     
     batchSize = 10000 # 10000
     batchCnt = 0
-    nameSeparator = "difficultyResult"
-    # nameSeparator = "testnetDifficultyResult"
+    # nameSeparator = "difficultyResult"
+    nameSeparator = "minersResult"
     while(blockTo-blockFrom > 0):
         print("fetching batch " + str(batchCnt) + " ...")
         batchEnd = min(blockFrom + batchSize, blockTo)
-        df = fetch.fetchDifficulty(endpoint, blockFrom, batchEnd) 
+        df = fetch.fetchMiners(endpoint, blockFrom, batchEnd) 
         fileName = nameSeparator + str(batchCnt) + ".csv"
         utils.saveFile(df, fileName)
         batchCnt = batchCnt + 1
@@ -45,7 +45,5 @@ if __name__=="__main__":
     print("done!")
     utils.mergeBatch(nameSeparator, batchCnt)
     utils.clearIntermediate(nameSeparator, batchCnt)
-    df = genBlockTime.genData(nameSeparator + ".csv")
-    postProcessed = nameSeparator + "_processed.csv"
-    utils.saveFile(df, postProcessed)
-    analysis.main(postProcessed)
+    mergeFileName = nameSeparator + ".csv"
+    minerAnalysis.main(mergeFileName)

@@ -7,7 +7,8 @@ from scipy.stats import chi2, chisquare
 from . import utils
 
 if __name__ == "__main__":
-    fileName = os.path.join(os.path.join("temp", "ETH_10247484"), "genResult.csv")
+    # fileName = "difficultyResult_processed.csv"
+    fileName = os.path.join("temp",os.path.join("ETH_10570486", "genResult.csv"))
     df = utils.readFile(fileName)
     useFullData = True
     if useFullData:
